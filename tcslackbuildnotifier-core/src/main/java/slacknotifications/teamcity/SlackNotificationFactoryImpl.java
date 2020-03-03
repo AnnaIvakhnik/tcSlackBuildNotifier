@@ -19,7 +19,11 @@ public class SlackNotificationFactoryImpl implements SlackNotificationFactory {
 		return new SlackNotificationImpl(channel);
 	}
 
-    @Override
+	public SlackNotification getSlackNotification(String channel, boolean isPrivate) {
+		return new SlackNotificationImpl(channel, isPrivate);
+	}
+
+	@Override
     public SlackNotification getSlackNotification(HttpClient httpClient, String channel) {
         return new SlackNotificationImpl(httpClient, channel);
     }

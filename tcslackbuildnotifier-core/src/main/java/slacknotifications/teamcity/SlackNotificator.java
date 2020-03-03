@@ -20,10 +20,7 @@ import slacknotifications.SlackNotification;
 import slacknotifications.teamcity.payload.SlackNotificationPayloadManager;
 import slacknotifications.teamcity.settings.SlackNotificationMainSettings;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SlackNotificator implements Notificator {
 
@@ -62,6 +59,7 @@ public class SlackNotificator implements Notificator {
 
     @Override
     public void notifyBuildStarted(SRunningBuild sRunningBuild, Set<SUser> set) {
+        set = checkBuildPrivacy(sRunningBuild);
         for (SUser sUser : set) {
             if (!userHasSlackIdConfigured(sUser)) {
                 continue;
@@ -70,10 +68,12 @@ public class SlackNotificator implements Notificator {
             slackNotification.setPayload(payloadManager.buildStarted(sRunningBuild, getPreviousNonPersonalBuild(sRunningBuild)));
             doNotification(slackNotification);
         }
+
     }
 
     @Override
     public void notifyBuildSuccessful(SRunningBuild sRunningBuild, Set<SUser> set) {
+        set = checkBuildPrivacy(sRunningBuild);
         for (SUser sUser : set) {
             if (!userHasSlackIdConfigured(sUser)) {
                 continue;
@@ -86,6 +86,7 @@ public class SlackNotificator implements Notificator {
 
     @Override
     public void notifyBuildFailed(SRunningBuild sRunningBuild, Set<SUser> set) {
+        set = checkBuildPrivacy(sRunningBuild);
         for (SUser sUser : set) {
             if (!userHasSlackIdConfigured(sUser)) {
                 continue;
@@ -107,6 +108,7 @@ public class SlackNotificator implements Notificator {
 
     @Override
     public void notifyBuildFailing(SRunningBuild sRunningBuild, Set<SUser> set) {
+        set = checkBuildPrivacy(sRunningBuild);
         for (SUser sUser : set) {
             if (!userHasSlackIdConfigured(sUser)) {
                 continue;
@@ -201,10 +203,22 @@ public class SlackNotificator implements Notificator {
         return StringUtil.isNotEmpty(userName);
     }
 
+    private Set<SUser> checkBuildPrivacy(SRunningBuild sRunningBuild) {
+        final boolean isPrivateRun = sRunningBuild.isPersonal();
+        final SUser triggeredByUser = sRunningBuild.getTriggeredBy().getUser();
+        if (isPrivateRun && triggeredByUser != null && userHasSlackIdConfigured(triggeredByUser)) {
+            return new HashSet<SUser>(Collections.singletonList(triggeredByUser));
+        }
+        else {
+            return new HashSet<SUser>();
+        }
+    }
+
     private SlackNotification createNotification(SUser sUser) {
         SlackNotification notification = notificationFactory.getSlackNotification();
         String userId = sUser.getPropertyValue(USERID_KEY);
         notification.setChannel(userId);
+     //   notification.setIsPrivate(sRunningBuild.isPersonal());//!!!!!!!!!!
         notification.setTeamName(mainConfig.getTeamName());
         notification.setToken(mainConfig.getToken());
         notification.setFilterBranchName(mainConfig.getFilterBranchName());

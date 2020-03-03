@@ -4,7 +4,7 @@
     <parent>
         <artifactId>tcslackbuildnotifier</artifactId>
         <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
-        <version>${currentVersion}</version>
+        <version>1.4.11</version>
         <relativePath>..</relativePath>
     </parent>
     <artifactId>tcslackbuildnotifier-web-ui</artifactId>
@@ -148,14 +148,14 @@
         <dependency>
             <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
             <artifactId>tcslackbuildnotifier-core</artifactId>
-            <version>${currentVersion}</version>
+            <version>1.4.11</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
             <artifactId>tcslackbuildnotifier-core</artifactId>
-            <version>${currentVersion}</version>
+            <version>1.4.11</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>

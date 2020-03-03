@@ -47,7 +47,7 @@
 		</table>
       <div id="editSlackNotificationDialog" class="editParameterDialog modalDialog"  style="width:50em;">
         <div class="dialogHeader">
-          <div class="closeWindow">
+          <div class="closeWindow" id="closeButton">
             <a title="Close dialog window" href="javascript://" showdiscardchangesmessage="false"
                onclick="BS.EditSlackNotificationDialog.cancelDialog()">close</a>
           </div>

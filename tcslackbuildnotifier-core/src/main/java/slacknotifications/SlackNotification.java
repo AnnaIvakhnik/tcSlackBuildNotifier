@@ -78,6 +78,10 @@ public interface SlackNotification {
 
 	public abstract String getErrorReason();
 
+	public abstract boolean getIsPrivate();
+
+	public abstract void setIsPrivate(boolean isPrivate);
+
 	public abstract void setErrorReason(String errorReason);
 
 	public abstract BuildState getBuildStates();

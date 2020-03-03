@@ -4,13 +4,13 @@
     <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
     <artifactId>tcslackbuildnotifier</artifactId>
     <properties>
-        <teamcity-version>9.1.7</teamcity-version>
+        <teamcity-version>2019.1.1</teamcity-version>
         <majorVersion>1</majorVersion>
-        <minorVersion>4</minorVersion>
-        <patchVersion>10</patchVersion>
+        <minorVersion>5</minorVersion>
+        <patchVersion>0</patchVersion>
         <currentVersion>${majorVersion}.${minorVersion}.${patchVersion}</currentVersion>
     </properties>
-    <version>${currentVersion}</version>
+    <version>1.4.11</version>
     <name>tcSlackNotifications - Extends TeamCity functionality by adding slack notifications</name>
     <build>
         <defaultGoal>package</defaultGoal>
@@ -87,7 +87,7 @@
                 <artifactId>teamcity-sdk-maven-plugin</artifactId>
                 <version>0.2</version>
                 <configuration>
-                    <teamcityDir>servers/${teamcity-version}</teamcityDir>
+                    <teamcityDir>/home/user/Documents/TeamCity</teamcityDir>
                     <pluginPackageName>${project.artifactId}-${project.version}.zip</pluginPackageName>
                 </configuration>
             </plugin>
@@ -118,15 +118,15 @@
     <reporting>
         <plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.0.1</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.0.0</version>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.1</version>
+				<version>3.1.1</version>
 			</plugin>
 			
 			<plugin>
@@ -153,11 +153,10 @@
 
     <developers>
         <developer>
-            <id>petegoo</id>
-            <name>PeteGoo</name>
-            <url>http://www.petegoo.com</url>
+            <id>ait</id>
+            <name>AIT</name>
+            <email>annai@wix.com</email>
             <roles>
-                <role>architect</role>
                 <role>developer</role>
             </roles>
         </developer>

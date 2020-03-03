@@ -7,8 +7,8 @@
     <version>${version}</version>
     <description>Trigger slack notifications POST requests from build events. Adds tabs to the Project and Build pages.</description>
     <vendor>
-      <name>PeteGoo</name>
-      <url>http://blog.petegoo.com/</url>
+      <name>ait</name>
+      <url>annai@wix.com/</url>
     </vendor>
   </info>
   <deployment use-separate-classloader="false"/>

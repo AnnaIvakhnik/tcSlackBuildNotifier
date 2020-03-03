@@ -46,7 +46,7 @@ public class SlackNotificationPayloadContent {
     String buildStateDescription;
     String progressSummary;
     private boolean isFirstFailedBuild;
-
+    Boolean isPrivate;
     Boolean branchIsDefault;
 
     Branch branch;
@@ -63,6 +63,7 @@ public class SlackNotificationPayloadContent {
     public final static String BUILD_STATUS_FAILURE   = "Failed";
     public final static String BUILD_STATUS_SUCCESS   = "Succeeded";
     public final static String BUILD_STATUS_RUNNING   = "Running";
+    public final static String BUILD_STATUS_INTERUPTED  = "Interrupted";
     public final static String BUILD_STATUS_NO_CHANGE = "Unchanged";
     public final static String BUILD_STATUS_FIXED     = "Fixed";
     public final static String BUILD_STATUS_BROKEN    = "Broken";
@@ -101,6 +102,7 @@ public class SlackNotificationPayloadContent {
         payloadCommits.populateCommits(sRunningBuild);
         populateArtifacts(sRunningBuild);
         populateResults(sRunningBuild);
+        //here
     }
 
     private void populateResults(SRunningBuild sRunningBuild) {
@@ -248,7 +250,7 @@ public class SlackNotificationPayloadContent {
                     this.buildResultPrevious = BUILD_STATUS_FAILURE;
                 }
             } else {
-                this.buildResultPrevious = BUILD_STATUS_RUNNING;
+                this.buildResultPrevious = BUILD_STATUS_RUNNING; //here add label for interupted
             }
         } else {
             this.buildResultPrevious = BUILD_STATUS_UNKNOWN;
@@ -276,10 +278,11 @@ public class SlackNotificationPayloadContent {
                 }
             }
         } else {
-            this.buildResult = BUILD_STATUS_RUNNING;
+            this.buildResult = BUILD_STATUS_RUNNING;//here should be updated to interupted
             this.buildResultDelta = BUILD_STATUS_UNKNOWN;
         }
 
+        this.isPrivate = sRunningBuild.isPersonal()? this.isPrivate = true: false;
     }
 
     // Getters and setters
