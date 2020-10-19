@@ -65,7 +65,7 @@ public class SlackNotificator implements Notificator {
                 continue;
             }
             SlackNotification slackNotification = createNotification(sUser);
-            slackNotification.setPayload(payloadManager.buildStarted(sRunningBuild, getPreviousNonPersonalBuild(sRunningBuild)));
+            slackNotification.setPayload(payloadManager.buildStarted(sRunningBuild, getPreviousNonPersonalBuild(sRunningBuild), slackNotification.getSlackBuildOwner()));
             doNotification(slackNotification);
         }
 
@@ -79,7 +79,7 @@ public class SlackNotificator implements Notificator {
                 continue;
             }
             SlackNotification slackNotification = createNotification(sUser);
-            slackNotification.setPayload(payloadManager.buildFinished(sRunningBuild, getPreviousNonPersonalBuild(sRunningBuild)));
+            slackNotification.setPayload(payloadManager.buildFinished(sRunningBuild, getPreviousNonPersonalBuild(sRunningBuild), slackNotification.getSlackBuildOwner()));
             doNotification(slackNotification);
         }
     }
@@ -92,7 +92,7 @@ public class SlackNotificator implements Notificator {
                 continue;
             }
             SlackNotification slackNotification = createNotification(sUser);
-            slackNotification.setPayload(payloadManager.buildFinished(sRunningBuild, getPreviousNonPersonalBuild(sRunningBuild)));
+            slackNotification.setPayload(payloadManager.buildFinished(sRunningBuild, getPreviousNonPersonalBuild(sRunningBuild), slackNotification.getSlackBuildOwner()));
             doNotification(slackNotification);
         }
     }
@@ -114,7 +114,7 @@ public class SlackNotificator implements Notificator {
                 continue;
             }
             SlackNotification slackNotification = createNotification(sUser);
-            slackNotification.setPayload(payloadManager.beforeBuildFinish(sRunningBuild, getPreviousNonPersonalBuild(sRunningBuild)));
+            slackNotification.setPayload(payloadManager.beforeBuildFinish(sRunningBuild, getPreviousNonPersonalBuild(sRunningBuild), slackNotification.getSlackBuildOwner()));
             doNotification(slackNotification);
         }
     }
@@ -231,6 +231,7 @@ public class SlackNotificator implements Notificator {
         notification.setMaxCommitsToDisplay(mainConfig.getMaxCommitsToDisplay());
         notification.setMentionChannelEnabled(false);
         notification.setShowFailureReason(mainConfig.getShowFailureReason());
+      //  notification.setMentionSlackBuildOwner(true);
 
         return notification;
 

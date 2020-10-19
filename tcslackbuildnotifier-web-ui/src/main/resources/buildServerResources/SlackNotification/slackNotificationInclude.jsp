@@ -78,10 +78,6 @@
 													<td></td>
 													<td colspan=2><span class="error" id="error_slackNotificationToken" style="margin-left: 0.5em;"></span></td>
 												</tr>
-												<tr style="border:none">
-                                                  <td></td>
-                                                  <td colspan="2"><span class="smallNote" style="margin-left:0px;">A user OAuth token for your team. You can get this from the <a href="https://api.slack.com/web" target="_blank">api page</a> when you are signed in to your team. If you are using the "Incoming WebHooks" integration you can simply enter the webhook URL in here instead.</span></td>
-                                                </tr>
 												<tr style="border:none;">
 													<td>Channel:</td>
 													<td colspan=2><input id="slackNotificationChannel" name="channel" type=text maxlength=512 style="margin: 0pt; padding: 0pt; width: 36em;" watermark=" #my-channel"/></td>
@@ -170,6 +166,16 @@
 												<tr style="border:none;">
 													<td><label for="mentionWhoTriggeredEnabled">Mention who triggered:</label></td>
 													<td style="padding-left:3px;" colspan=2><input id="mentionWhoTriggeredEnabled" type=checkbox name="mentionWhoTriggeredEnabled"/></td>
+												</tr>
+
+												<tr style="border:none;">
+													<td>Slack build owner:</td>
+													<td colspan=2><input id="slackBuildOwner" name="slackBuildOwner" type=text maxlength=512 style="margin: 0pt; padding: 0pt; width: 36em;"/></td>
+												</tr>
+
+												<tr style="border:none;">
+													<td><label for="mentionSlackOwnerEnabled">Mention slack build owner:</label></td>
+													<td style="padding-left:3px;" colspan=2><input id="mentionSlackOwnerEnabled" type=checkbox name="mentionSlackOwnerEnabled"/></td>
 												</tr>
 					    					</table>     
 					    					

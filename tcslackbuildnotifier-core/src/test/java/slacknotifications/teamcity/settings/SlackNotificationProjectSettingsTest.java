@@ -38,9 +38,9 @@ public class SlackNotificationProjectSettingsTest {
 		SlackNotificationProjectSettings settings = psf.createProjectSettings("project1");
 		BuildState state = new BuildState().setAllEnabled();
 		settings.addNewSlackNotification("1", "1", "#general", "Steve",
-				"master", false, state, false, false,
+				"master", "ownerName", false, state, false, false,
 				new HashSet<String>(), false, false,
-				false, false);
+				false, false, false);
 		List<SlackNotificationConfig> listOfConfigs = settings.getSlackNotificationsConfigs();
 		for (SlackNotificationConfig config : listOfConfigs) {
 			assertTrue(config.getFilterBranchName() == "master");

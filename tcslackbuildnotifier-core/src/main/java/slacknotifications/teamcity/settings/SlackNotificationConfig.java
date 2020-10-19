@@ -22,6 +22,7 @@ public class SlackNotificationConfig {
 	private static final String TEAM_NAME = "teamName";
 	private static final String CHANNEL_ENABLED_MESSAGE = "mention-channel-enabled";
 	private static final String SLACK_USER_ENABLED_MESSAGE = "mention-slack-user-enabled";
+	private static final String SLACK_BUILD_OWNER_ENABLED_MESSAGE = "mention-slack-build-owner-enabled";
 	private static final String HERE_ENABLED_MESSAGE = "mention-here-enabled";
 	private static final String WHO_TRIGGERED_ENABLED_MESSAGE = "mention-who-triggered-enabled";
 	private static final String STATES = "states";
@@ -45,6 +46,7 @@ public class SlackNotificationConfig {
 	private String uniqueKey = "";
 	private String apiToken;
 	private String channel;
+	private String slackBuildOwner;
     private String teamName;
 	private BuildState states = new BuildState();
 	private SortedMap<String, CustomMessageTemplate> templates; 
@@ -54,6 +56,7 @@ public class SlackNotificationConfig {
     private boolean mentionChannelEnabled;
 	private boolean mentionSlackUserEnabled;
 	private boolean mentionHereEnabled;
+	private boolean mentionSlackOwnerEnabled;
 	private boolean mentionWhoTriggeredEnabled;
     private boolean customContent;
     private SlackNotificationContentConfig content;
@@ -101,6 +104,10 @@ public class SlackNotificationConfig {
 
 		if (e.getAttribute(SLACK_USER_ENABLED_MESSAGE) != null){
 			this.setMentionSlackUserEnabled(Boolean.parseBoolean(e.getAttributeValue("mention-slack-user-enabled")));
+		}
+
+		if (e.getAttribute(SLACK_BUILD_OWNER_ENABLED_MESSAGE) != null){
+			this.setSlackBuildOwnerEnabled(Boolean.parseBoolean(e.getAttributeValue(SLACK_BUILD_OWNER_ENABLED_MESSAGE)));
 		}
 
 		if (e.getAttribute(HERE_ENABLED_MESSAGE) != null){
@@ -225,6 +232,7 @@ public class SlackNotificationConfig {
 								   String channel,
 								   String teamName,
 								   String filterBranchName,
+								   String slackBuildOwner,
 								   Boolean enabled,
 								   BuildState states,
 								   boolean buildTypeAllEnabled,
@@ -232,6 +240,7 @@ public class SlackNotificationConfig {
 								   Set<String> enabledBuildTypes,
 								   boolean mentionChannelEnabled,
 								   boolean mentionSlackUserEnabled,
+								   boolean mentionSlackOwnerEnabled,
 								   boolean mentionHereEnabled,
 								   boolean mentionWhoTriggeredEnabled) {
         this.content = new SlackNotificationContentConfig();
@@ -242,6 +251,7 @@ public class SlackNotificationConfig {
         this.setToken(token);
         this.setChannel(channel);
         this.setTeamName(teamName);
+        this.setSlackBuildOwner(slackBuildOwner);
         this.setFilterBranchName(filterBranchName);
         this.setEnabled(enabled);
         this.setBuildStates(states);
@@ -249,6 +259,7 @@ public class SlackNotificationConfig {
         this.allBuildTypesEnabled = buildTypeAllEnabled;
         this.setMentionChannelEnabled(mentionChannelEnabled);
 		this.setMentionSlackUserEnabled(mentionSlackUserEnabled);
+		this.setSlackBuildOwnerEnabled(mentionSlackOwnerEnabled);
 		this.setMentionHereEnabled(mentionHereEnabled);
 		this.setMentionWhoTriggeredEnabled(mentionWhoTriggeredEnabled);
 
@@ -278,6 +289,7 @@ public class SlackNotificationConfig {
 		el.setAttribute(SLACK_USER_ENABLED_MESSAGE, String.valueOf(this.getMentionSlackUserEnabled()));
 		el.setAttribute(HERE_ENABLED_MESSAGE, String.valueOf(this.getMentionHereEnabled()));
 		el.setAttribute(WHO_TRIGGERED_ENABLED_MESSAGE, String.valueOf(this.isMentionWhoTriggeredEnabled()));
+		el.setAttribute(SLACK_BUILD_OWNER_ENABLED_MESSAGE, String.valueOf(this.getSlackBuildOwnerEnabled()));
 
 		Element statesEl = new Element(STATES);
 		for (BuildStateEnum state : states.getStateSet()){
@@ -387,6 +399,14 @@ public class SlackNotificationConfig {
 
 	public void setChannel(String channel) {
 		this.channel = channel;
+	}
+
+	public void setSlackBuildOwner(String slackBuildOwner) {
+		this.slackBuildOwner = slackBuildOwner;
+	}
+
+	public String getSlackBuildOwner() {
+		return slackBuildOwner;
 	}
 
     public String getTeamName() {
@@ -569,6 +589,14 @@ public class SlackNotificationConfig {
 
 	public boolean getMentionSlackUserEnabled() {
 		return mentionSlackUserEnabled;
+	}
+
+	public void setSlackBuildOwnerEnabled(boolean mentionSlackOwnerEnabled) {
+		this.mentionSlackOwnerEnabled = mentionSlackOwnerEnabled;
+	}
+
+	public boolean getSlackBuildOwnerEnabled() {
+		return mentionSlackOwnerEnabled;
 	}
 
 	public void setMentionHereEnabled(boolean mentionHereEnabled) {

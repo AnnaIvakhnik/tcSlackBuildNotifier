@@ -46,6 +46,10 @@ public interface SlackNotification {
 
 	public abstract void setFilterBranchName(String branchName);
 
+	public abstract String getSlackBuildOwner();
+
+	public abstract void setSlackBuildOwner(String slackBuildOwner);
+
 	public abstract String getIconUrl();
 
 	public abstract void setIconUrl(String iconUrl);
@@ -119,7 +123,9 @@ public interface SlackNotification {
 
 	public abstract void setMentionChannelEnabled(boolean mentionChannelEnabled);
 
-	public abstract void setMentionSlackUserEnabled(boolean mentionSlackUserEnabled);
+	public abstract void setMentionSlackBuildOwner(boolean mentionSlackOwnerEnabled);
+
+	public abstract void setMentionSlackUserEnabled(boolean mentionSlackOwnerEnabled);
 
 	public abstract void setMentionHereEnabled(boolean mentionHereEnabled);
 

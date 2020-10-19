@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
 public class SlackNotificationImpl implements SlackNotification {
@@ -64,11 +65,13 @@ public class SlackNotificationImpl implements SlackNotification {
     private boolean showCommits;
     private boolean showCommitters;
     private String filterBranchName;
+    private String slackBuildOwner;
     private boolean showTriggeredBy;
     private int maxCommitsToDisplay;
     private boolean mentionChannelEnabled;
     private boolean mentionSlackUserEnabled;
     private boolean mentionHereEnabled;
+    private boolean mentionSlackOwnerEnabled;
     private boolean mentionWhoTriggeredEnabled;
     private boolean showFailureReason;
     private boolean isPrivate;
@@ -393,6 +396,15 @@ public class SlackNotificationImpl implements SlackNotification {
             attachment.addField("Triggered By", this.payload.getTriggeredBy(), false);
         }
 
+        if (mentionSlackOwnerEnabled && !this.slackBuildOwner.isEmpty()) {
+            String ownersSrt = Arrays.stream(this.slackBuildOwner.split("[,;]")).map(str->
+                    {if (str.startsWith(" "))
+                        return str.substring(1);
+                    else return str;}
+            ).map(str->"@" + str).collect(Collectors.joining( ", " ));
+            attachment.addField("Build owner(s)", ownersSrt, false);
+        }
+
         // Mention the channel and/or the Slack Username of any committers if known
         boolean needMentionForFirstFailure = payload.getIsFirstFailedBuild()
                 && (mentionChannelEnabled
@@ -700,16 +712,32 @@ public class SlackNotificationImpl implements SlackNotification {
         this.showCommitters = showCommitters;
     }
 
+    @Override
     public void setFilterBranchName(String filterBranchName) {
         this.filterBranchName = filterBranchName;
     }
 
+    @Override
     public String getFilterBranchName() {
         if (this.filterBranchName == null || this.filterBranchName.isEmpty()) {
             setFilterBranchName("<default>");
             Loggers.SERVER.info("SlackNotification :: filterBranchName is empty, defaults to <default>.");
         }
         return this.filterBranchName;
+    }
+
+    @Override
+    public void setSlackBuildOwner(String slackBuildOwner) {
+        this.slackBuildOwner = slackBuildOwner;
+    }
+
+    @Override
+    public String getSlackBuildOwner() {
+        if (this.slackBuildOwner == null || this.slackBuildOwner.isEmpty()) {
+            setSlackBuildOwner("");
+            Loggers.SERVER.info("SlackNotification :: slackBuildOwner is empty, defaults to ``");
+        }
+        return this.slackBuildOwner;
     }
 
     @Override
@@ -735,6 +763,11 @@ public class SlackNotificationImpl implements SlackNotification {
     @Override
     public void setMentionHereEnabled(boolean mentionHereEnabled) {
         this.mentionHereEnabled = mentionHereEnabled;
+    }
+
+    @Override
+    public void setMentionSlackBuildOwner(boolean mentionSlackOwnerEnabled) {
+        this.mentionSlackOwnerEnabled = mentionSlackOwnerEnabled;
     }
 
     @Override

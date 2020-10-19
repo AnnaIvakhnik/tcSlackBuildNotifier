@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
     <artifactId>tcslackbuildnotifier</artifactId>
@@ -10,7 +9,7 @@
         <patchVersion>0</patchVersion>
         <currentVersion>${majorVersion}.${minorVersion}.${patchVersion}</currentVersion>
     </properties>
-    <version>1.4.11</version>
+    <version>1.5.1-SNAPSHOT</version>
     <name>tcSlackNotifications - Extends TeamCity functionality by adding slack notifications</name>
     <build>
         <defaultGoal>package</defaultGoal>
@@ -99,10 +98,10 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <echo message=" - Copy artefact zip to root target/ folder"/>
+                                <echo message=" - Copy artefact zip to root target/ folder" />
                                 <copy failonerror="false" todir="${project.build.directory}">
                                     <fileset dir="${project.basedir}/tcslackbuildnotifier-web-ui/target/" erroronmissingdir="false">
-                                        <include name="*.zip"/>
+                                        <include name="*.zip" />
                                     </fileset>
                                 </copy>
                             </tasks>

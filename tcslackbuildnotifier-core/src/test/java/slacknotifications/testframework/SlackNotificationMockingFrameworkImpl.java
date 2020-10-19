@@ -96,7 +96,7 @@ public class SlackNotificationMockingFrameworkImpl implements SlackNotificationM
 	public static SlackNotificationMockingFramework create(BuildStateEnum buildState) {
 		SlackNotificationMockingFrameworkImpl framework = new SlackNotificationMockingFrameworkImpl();
 		framework.buildstateEnum = buildState;
-		framework.content = new SlackNotificationPayloadContent(framework.sBuildServer, framework.sRunningBuild, framework.previousSuccessfulBuild, buildState);
+		framework.content = new SlackNotificationPayloadContent(framework.sBuildServer, framework.sRunningBuild, framework.previousSuccessfulBuild, buildState, "ownerName");
 		return framework;
 	}
 
@@ -118,7 +118,7 @@ public class SlackNotificationMockingFrameworkImpl implements SlackNotificationM
 	@Override
 	public void loadSlackNotificationConfigXml(File xmlConfigFile) throws JDOMException, IOException {
 		slackNotificationConfig = ConfigLoaderUtil.getFirstSlackNotificationInConfig(xmlConfigFile);
-		this.content = new SlackNotificationPayloadContent(this.sBuildServer, this.sRunningBuild, this.previousSuccessfulBuild, this.buildstateEnum);
+		this.content = new SlackNotificationPayloadContent(this.sBuildServer, this.sRunningBuild, this.previousSuccessfulBuild, this.buildstateEnum, "ownerName");
 		
 	}
 	

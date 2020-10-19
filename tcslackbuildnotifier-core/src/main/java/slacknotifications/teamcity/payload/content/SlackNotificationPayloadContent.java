@@ -37,6 +37,7 @@ public class SlackNotificationPayloadContent {
     String agentOs;
     String agentHostname;
     String triggeredBy;
+    String slackBuildOwner;
     String triggeredBySlackUserId;
     String comment;
     String message;
@@ -84,8 +85,8 @@ public class SlackNotificationPayloadContent {
      * @param buildType
      * @param buildState
      */
-    public SlackNotificationPayloadContent(SBuildServer server, SBuildType buildType, BuildStateEnum buildState) {
-        populateCommonContent(server, buildType, buildState);
+    public SlackNotificationPayloadContent(SBuildServer server, SBuildType buildType, BuildStateEnum buildState, String slackBuildOwner) {
+        populateCommonContent(server, buildType, buildState, slackBuildOwner);
     }
 
     /**
@@ -96,8 +97,8 @@ public class SlackNotificationPayloadContent {
      * @param buildState
      */
     public SlackNotificationPayloadContent(SBuildServer server, SRunningBuild sRunningBuild, SFinishedBuild previousBuild,
-                                           BuildStateEnum buildState) {
-        populateCommonContent(server, sRunningBuild, previousBuild, buildState);
+                                           BuildStateEnum buildState, String slackBuildOwner) {
+        populateCommonContent(server, sRunningBuild, previousBuild, buildState, slackBuildOwner);
         populateMessageAndText(sRunningBuild, buildState);
         payloadCommits.populateCommits(sRunningBuild);
         populateArtifacts(sRunningBuild);
@@ -145,7 +146,7 @@ public class SlackNotificationPayloadContent {
      * @param buildType
      * @param state
      */
-    private void populateCommonContent(SBuildServer server, SBuildType buildType, BuildStateEnum state) {
+    private void populateCommonContent(SBuildServer server, SBuildType buildType, BuildStateEnum state, String slackBuildOwner) {
         setBuildFullName(buildType.getFullName());
         setBuildName(buildType.getName());
         setBuildTypeId(TeamCityIdResolver.getBuildTypeId(buildType));
@@ -173,7 +174,7 @@ public class SlackNotificationPayloadContent {
      * @param buildState
      */
     private void populateCommonContent(SBuildServer server, SRunningBuild sRunningBuild, SFinishedBuild previousBuild,
-                                       BuildStateEnum buildState) {
+                                       BuildStateEnum buildState, String slackBuildOwner) {
         setBuildResult(sRunningBuild, previousBuild, buildState);
         setBuildFullName(sRunningBuild.getBuildType().getFullName());
         setBuildName(sRunningBuild.getBuildType().getName());
@@ -185,6 +186,7 @@ public class SlackNotificationPayloadContent {
         setBuildTypeId(TeamCityIdResolver.getBuildTypeId(sRunningBuild.getBuildType()));
         setAgentName(sRunningBuild.getAgentName());
         setElapsedTime(sRunningBuild.getElapsedTime());
+        setSlackBuildOwner(slackBuildOwner);
 
         try {
             if (sRunningBuild.getBranch() != null) {
@@ -202,8 +204,6 @@ public class SlackNotificationPayloadContent {
         String branchSuffix = (getBranchIsDefault() != null && getBranchIsDefault()) || getBranchDisplayName() == null ? "" : (" [" + getBranchDisplayName() + "]");
         setBuildDescriptionWithLinkSyntax(String.format("<" + getBuildStatusUrl() + "|" + getBuildResult() + " - " + sRunningBuild.getBuildType().getFullName() + " #" + sRunningBuild.getBuildNumber() + branchSuffix + ">"));
     }
-
-
 
     private Branch getBranch() {
         return this.branch;
@@ -319,6 +319,14 @@ public class SlackNotificationPayloadContent {
 
     public void setTriggeredBy(String triggeredBy) {
         this.triggeredBy = triggeredBy;
+    }
+
+    public String getSlackBuildOwner() {
+        return slackBuildOwner;
+    }
+
+    public void setSlackBuildOwner(String slackBuildOwner) {
+        this.slackBuildOwner = slackBuildOwner;
     }
 
     public String getBuildId() {

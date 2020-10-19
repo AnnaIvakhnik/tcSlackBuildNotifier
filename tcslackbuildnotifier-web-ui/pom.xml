@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>tcslackbuildnotifier</artifactId>
         <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
-        <version>1.4.11</version>
+        <version>1.5.1-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <artifactId>tcslackbuildnotifier-web-ui</artifactId>
@@ -110,28 +109,26 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <echo message="Attempting to build dist zip file"/>
-                                <mkdir dir="${project.build.directory}/dist"/>
-                                <mkdir dir="${project.build.directory}/dist/server"/>
+                                <echo message="Attempting to build dist zip file" />
+                                <mkdir dir="${project.build.directory}/dist" />
+                                <mkdir dir="${project.build.directory}/dist/server" />
 
-                                <echo message=" - Copying resources to dist"/>
+                                <echo message=" - Copying resources to dist" />
                                 <copy todir="${project.build.directory}/dist/">
                                     <fileset dir="${project.build.directory}/classes/">
-                                        <include name="teamcity-plugin.xml"/>
+                                        <include name="teamcity-plugin.xml" />
                                     </fileset>
                                 </copy>
 
-                                <echo message=" - Copying dep jar to dist/server"/>
+                                <echo message=" - Copying dep jar to dist/server" />
                                 <copy todir="${project.build.directory}/dist/server/">
                                     <fileset dir="${project.build.directory}/">
-                                        <include name="*-jar-with-dependencies.jar"/>
+                                        <include name="*-jar-with-dependencies.jar" />
                                     </fileset>
                                 </copy>
 
-                                <echo message=" - Creating ZIP file"/>
-                                <zip destfile="${project.build.directory}/${project.parent.artifactId}-${project.version}.zip"
-                                     basedir="${project.build.directory}/dist"
-                                />
+                                <echo message=" - Creating ZIP file" />
+                                <zip destfile="${project.build.directory}/${project.parent.artifactId}-${project.version}.zip" basedir="${project.build.directory}/dist" />
 
                             </tasks>
                         </configuration>
@@ -148,14 +145,14 @@
         <dependency>
             <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
             <artifactId>tcslackbuildnotifier-core</artifactId>
-            <version>1.4.11</version>
+            <version>1.5.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>petegoo.teamcity.plugins.tcslacknotifications</groupId>
             <artifactId>tcslackbuildnotifier-core</artifactId>
-            <version>1.4.11</version>
+            <version>1.5.1-SNAPSHOT</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>

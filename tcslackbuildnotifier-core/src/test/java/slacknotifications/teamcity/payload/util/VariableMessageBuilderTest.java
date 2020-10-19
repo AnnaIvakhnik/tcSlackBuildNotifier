@@ -29,7 +29,7 @@ public class VariableMessageBuilderTest {
 	
 	@Test
 	public void testBuild() {
-		SlackNotificationPayloadContent content = new SlackNotificationPayloadContent(sBuildServer, sRunningBuild, previousSuccessfulBuild, BuildStateEnum.BEFORE_BUILD_FINISHED);
+		SlackNotificationPayloadContent content = new SlackNotificationPayloadContent(sBuildServer, sRunningBuild, previousSuccessfulBuild, BuildStateEnum.BEFORE_BUILD_FINISHED, "ownerName");
 		VariableMessageBuilder builder = VariableMessageBuilder.create("This is a test ${buildFullName}", new SlackNotificationBeanUtilsVariableResolver(content));
 		System.out.println(builder.build());
 		System.out.println(content.getBuildFullName());
