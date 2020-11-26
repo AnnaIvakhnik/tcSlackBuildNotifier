@@ -23,6 +23,7 @@ public class SlackNotificationConfig {
 	private static final String CHANNEL_ENABLED_MESSAGE = "mention-channel-enabled";
 	private static final String SLACK_USER_ENABLED_MESSAGE = "mention-slack-user-enabled";
 	private static final String SLACK_BUILD_OWNER_ENABLED_MESSAGE = "mention-slack-build-owner-enabled";
+	private static final String MENTION_SLACK_BUILD_OWNER_ENABLED = "mention-slack-build-owner-enabled";
 	private static final String HERE_ENABLED_MESSAGE = "mention-here-enabled";
 	private static final String WHO_TRIGGERED_ENABLED_MESSAGE = "mention-who-triggered-enabled";
 	private static final String STATES = "states";
@@ -57,6 +58,7 @@ public class SlackNotificationConfig {
 	private boolean mentionSlackUserEnabled;
 	private boolean mentionHereEnabled;
 	private boolean mentionSlackOwnerEnabled;
+	private boolean mentionOwnerOnlyOnFailureEnabled;
 	private boolean mentionWhoTriggeredEnabled;
     private boolean customContent;
     private SlackNotificationContentConfig content;
@@ -108,6 +110,10 @@ public class SlackNotificationConfig {
 
 		if (e.getAttribute(SLACK_BUILD_OWNER_ENABLED_MESSAGE) != null){
 			this.setSlackBuildOwnerEnabled(Boolean.parseBoolean(e.getAttributeValue(SLACK_BUILD_OWNER_ENABLED_MESSAGE)));
+		}
+
+		if (e.getAttribute(MENTION_SLACK_BUILD_OWNER_ENABLED) != null){
+			this.setOwnerOnlyOnFailureEnabled(Boolean.parseBoolean(e.getAttributeValue(MENTION_SLACK_BUILD_OWNER_ENABLED)));
 		}
 
 		if (e.getAttribute(HERE_ENABLED_MESSAGE) != null){
@@ -241,6 +247,7 @@ public class SlackNotificationConfig {
 								   boolean mentionChannelEnabled,
 								   boolean mentionSlackUserEnabled,
 								   boolean mentionSlackOwnerEnabled,
+								   boolean mentionOwnerOnlyOnFailureEnabled,
 								   boolean mentionHereEnabled,
 								   boolean mentionWhoTriggeredEnabled) {
         this.content = new SlackNotificationContentConfig();
@@ -260,6 +267,7 @@ public class SlackNotificationConfig {
         this.setMentionChannelEnabled(mentionChannelEnabled);
 		this.setMentionSlackUserEnabled(mentionSlackUserEnabled);
 		this.setSlackBuildOwnerEnabled(mentionSlackOwnerEnabled);
+		this.setOwnerOnlyOnFailureEnabled(mentionOwnerOnlyOnFailureEnabled);
 		this.setMentionHereEnabled(mentionHereEnabled);
 		this.setMentionWhoTriggeredEnabled(mentionWhoTriggeredEnabled);
 
@@ -290,6 +298,7 @@ public class SlackNotificationConfig {
 		el.setAttribute(HERE_ENABLED_MESSAGE, String.valueOf(this.getMentionHereEnabled()));
 		el.setAttribute(WHO_TRIGGERED_ENABLED_MESSAGE, String.valueOf(this.isMentionWhoTriggeredEnabled()));
 		el.setAttribute(SLACK_BUILD_OWNER_ENABLED_MESSAGE, String.valueOf(this.getSlackBuildOwnerEnabled()));
+		el.setAttribute(MENTION_SLACK_BUILD_OWNER_ENABLED, String.valueOf(this.getOwnerOnlyOnFailureEnabled()));
 
 		Element statesEl = new Element(STATES);
 		for (BuildStateEnum state : states.getStateSet()){
@@ -595,8 +604,16 @@ public class SlackNotificationConfig {
 		this.mentionSlackOwnerEnabled = mentionSlackOwnerEnabled;
 	}
 
+	public void setOwnerOnlyOnFailureEnabled (boolean mentionOwnerOnlyOnFailureEnabled) {
+    	this.mentionOwnerOnlyOnFailureEnabled = mentionOwnerOnlyOnFailureEnabled;
+	}
+
 	public boolean getSlackBuildOwnerEnabled() {
 		return mentionSlackOwnerEnabled;
+	}
+
+	public boolean getOwnerOnlyOnFailureEnabled() {
+		return mentionOwnerOnlyOnFailureEnabled;
 	}
 
 	public void setMentionHereEnabled(boolean mentionHereEnabled) {

@@ -1,4 +1,5 @@
-<%@ include file="/include.jsp" %>
+<%@ include file="/annai
+include.jsp" %>
 <c:set var="title" value="SlackNotifications" scope="request"/>
 <bs:page>
 
@@ -127,6 +128,7 @@
 					jQuerySlacknotification('#slackBuildOwner').val(slacknotification.slackBuildOwner);
 					jQuerySlacknotification('#slackNotificationsEnabled').attr('checked', slacknotification.enabled);
 					jQuerySlacknotification('#mentionSlackOwnerEnabled').attr('checked', slacknotification.mentionSlackOwnerEnabled);
+					jQuerySlacknotification('#mentionOwnerOnlyOnFailureEnabled').attr('checked', slacknotification.mentionOwnerOnlyOnFailureEnabled);
 					jQuerySlacknotification.each(slacknotification.states, function(name, value){
 				    	jQuerySlacknotification('#' + value.buildStateName).attr('checked', value.enabled);
 				    });

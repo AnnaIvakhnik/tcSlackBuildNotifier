@@ -232,7 +232,6 @@ public class SlackNotificator implements Notificator {
         notification.setMentionChannelEnabled(false);
         notification.setShowFailureReason(mainConfig.getShowFailureReason());
       //  notification.setMentionSlackBuildOwner(true);
-
         return notification;
 
     }

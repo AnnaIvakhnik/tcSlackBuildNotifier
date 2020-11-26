@@ -132,7 +132,8 @@ public class SlackNotificationProjectSettings implements ProjectSettings {
         }    	
     }
 
-	public void updateSlackNotification(String ProjectId, String token, String slackNotificationId, String channel, String filterBranchName, String slackBuildOwner, Boolean enabled, BuildState buildState, boolean buildTypeAll, boolean buildSubProjects, Set<String> buildTypesEnabled, boolean mentionChannelEnabled, boolean mentionSlackUserEnabled, boolean mentionSlackOwnerEnabled, boolean mentionHereEnabled, boolean mentionWhoTriggeredEnabled, SlackNotificationContentConfig content) {
+	public void updateSlackNotification(String ProjectId, String token, String slackNotificationId, String channel, String filterBranchName, String slackBuildOwner, Boolean enabled, BuildState buildState, boolean buildTypeAll, boolean buildSubProjects, Set<String> buildTypesEnabled, boolean mentionChannelEnabled, boolean mentionSlackUserEnabled, boolean mentionSlackOwnerEnabled, boolean mentionOwnerOnlyOnFailureEnabled,
+										boolean mentionHereEnabled, boolean mentionWhoTriggeredEnabled, SlackNotificationContentConfig content) {
         if(this.slackNotificationsConfigs != null)
         {
         	updateSuccess = false;
@@ -149,6 +150,7 @@ public class SlackNotificationProjectSettings implements ProjectSettings {
 					whc.setMentionHereEnabled(mentionHereEnabled);
 					whc.setSlackBuildOwner(slackBuildOwner);
 					whc.setSlackBuildOwnerEnabled(mentionSlackOwnerEnabled);
+					whc.setOwnerOnlyOnFailureEnabled(mentionOwnerOnlyOnFailureEnabled);
 					whc.setMentionWhoTriggeredEnabled(mentionWhoTriggeredEnabled);
                 	whc.setBuildStates(buildState);
                 	whc.enableForSubProjects(buildSubProjects);
@@ -168,8 +170,8 @@ public class SlackNotificationProjectSettings implements ProjectSettings {
         }    			
 	}
 
-	public void addNewSlackNotification(String ProjectId, String token, String channel, String teamName,  String filterBranchName, String slackBuildOwner, Boolean enabled, BuildState buildState, boolean buildTypeAll, boolean buildTypeSubProjects, Set<String> buildTypesEnabled, boolean mentionChannelEnabled, boolean mentionSlackUserEnabled, boolean mentionSlackOwnerEnabled, boolean mentionHereEnabled, boolean mentionWhoTriggeredEnabled) {
-		this.slackNotificationsConfigs.add(new SlackNotificationConfig(token, channel, teamName, filterBranchName, slackBuildOwner, enabled, buildState, buildTypeAll, buildTypeSubProjects, buildTypesEnabled, mentionChannelEnabled, mentionSlackUserEnabled, mentionSlackOwnerEnabled, mentionHereEnabled, mentionWhoTriggeredEnabled));
+	public void addNewSlackNotification(String ProjectId, String token, String channel, String teamName,  String filterBranchName, String slackBuildOwner, Boolean enabled, BuildState buildState, boolean buildTypeAll, boolean buildTypeSubProjects, Set<String> buildTypesEnabled, boolean mentionChannelEnabled, boolean mentionSlackUserEnabled, boolean mentionSlackOwnerEnabled, boolean mentionOwnerOnlyOnFailureEnabled, boolean mentionHereEnabled, boolean mentionWhoTriggeredEnabled) {
+		this.slackNotificationsConfigs.add(new SlackNotificationConfig(token, channel, teamName, filterBranchName, slackBuildOwner, enabled, buildState, buildTypeAll, buildTypeSubProjects, buildTypesEnabled, mentionChannelEnabled, mentionSlackUserEnabled, mentionSlackOwnerEnabled, mentionOwnerOnlyOnFailureEnabled, mentionHereEnabled, mentionWhoTriggeredEnabled));
 		Loggers.SERVER.debug(NAME + ":addNewSlackNotification :: Adding slack notifications to " + ProjectId + " with channel " + channel);
 		this.updateSuccess = true;
 	}

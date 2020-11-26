@@ -125,6 +125,8 @@ public interface SlackNotification {
 
 	public abstract void setMentionSlackBuildOwner(boolean mentionSlackOwnerEnabled);
 
+	public abstract void setOwnerOnlyOnFailureEnabled(boolean mentionOwnerOnlyOnFailureEnabled);
+
 	public abstract void setMentionSlackUserEnabled(boolean mentionSlackOwnerEnabled);
 
 	public abstract void setMentionHereEnabled(boolean mentionHereEnabled);

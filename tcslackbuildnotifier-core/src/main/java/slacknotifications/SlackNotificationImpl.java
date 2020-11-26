@@ -72,6 +72,7 @@ public class SlackNotificationImpl implements SlackNotification {
     private boolean mentionSlackUserEnabled;
     private boolean mentionHereEnabled;
     private boolean mentionSlackOwnerEnabled;
+    private boolean mentionOwnerOnlyOnFailureEnabled;
     private boolean mentionWhoTriggeredEnabled;
     private boolean showFailureReason;
     private boolean isPrivate;
@@ -396,7 +397,10 @@ public class SlackNotificationImpl implements SlackNotification {
             attachment.addField("Triggered By", this.payload.getTriggeredBy(), false);
         }
 
-        if (mentionSlackOwnerEnabled && !this.slackBuildOwner.isEmpty()) {
+        if (mentionSlackOwnerEnabled && !this.slackBuildOwner.isEmpty()
+                && (!(mentionOwnerOnlyOnFailureEnabled && (this.payload.getBuildResult().toLowerCase().contains("running") ||
+                this.payload.getBuildResult().toLowerCase().contains("succeeded")))))
+        {
             String ownersSrt = Arrays.stream(this.slackBuildOwner.split("[,;]")).map(str->
                     {if (str.startsWith(" "))
                         return str.substring(1);
@@ -768,6 +772,11 @@ public class SlackNotificationImpl implements SlackNotification {
     @Override
     public void setMentionSlackBuildOwner(boolean mentionSlackOwnerEnabled) {
         this.mentionSlackOwnerEnabled = mentionSlackOwnerEnabled;
+    }
+
+    @Override
+    public void setOwnerOnlyOnFailureEnabled(boolean mentionOwnerOnlyOnFailureEnabled) {
+        this.mentionOwnerOnlyOnFailureEnabled = mentionOwnerOnlyOnFailureEnabled;
     }
 
     @Override

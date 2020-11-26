@@ -177,6 +177,11 @@
 													<td><label for="mentionSlackOwnerEnabled">Mention slack build owner:</label></td>
 													<td style="padding-left:3px;" colspan=2><input id="mentionSlackOwnerEnabled" type=checkbox name="mentionSlackOwnerEnabled"/></td>
 												</tr>
+
+												<tr style="border:none;">
+													<td><label for="mentionOwnerOnlyOnFailureEnabled">Mention build owner only if failed:</label></td>
+													<td style="padding-left:3px;" colspan=2><input id="mentionOwnerOnlyOnFailureEnabled" type=checkbox name="mentionOwnerOnlyOnFailureEnabled"/></td>
+												</tr>
 					    					</table>     
 					    					
 					    			</div><!--hookPane -->
